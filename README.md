@@ -20,6 +20,7 @@ Docker container that periodically syncs a folder to Amazon S3 using the [AWS Co
 * `-e MAX_CONCURRENT_REQUESTS=<MAX_CONCURRENT_REQUESTS>`: The maximum number of concurrent requests.
 * `-e MULTIPART_THRESHOLD=<THRESHOLD>`: The size threshold the CLI uses for multipart transfers of individual files.
 * `-e MULTIPART_CHUNKSIZE=<CHUNKSIZE>`: When using multipart transfers, this is the chunk size that the CLI uses for multipart transfers of individual files.
+* `-e MAX_BANDWIDTH=<CHUNKSIZE>`: When using multipart transfers, this is the chunk size that the CLI uses for multipart transfers of individual files.
 * `-v /path/to/backup:/data:ro`: mount target local folder to container's data folder. Content of this folder will be synced with S3 bucket.
 
 ### Optional parameters:
@@ -43,6 +44,7 @@ Sync every hour with cron schedule (container keeps running):
         -e MAX_CONCURRENT_REQUESTS=4 \
         -e MULTIPART_THRESHOLD=1MB \
         -e MULTIPART_CHUNKSIZE=1MB \
+        -e MAX_BANDWIDTH=50MB/s \
         -v /home/user/data:/data:ro \
         futurevision/aws-s3-sync
 
@@ -56,6 +58,7 @@ Sync just once (container is deleted afterwards):
         -e MAX_CONCURRENT_REQUESTS=4 \
         -e MULTIPART_THRESHOLD=1MB \
         -e MULTIPART_CHUNKSIZE=1MB \
+        -e MAX_BANDWIDTH=50MB/s \
         -v /home/user/data:/data:ro \
         futurevision/aws-s3-sync no-cron
 
