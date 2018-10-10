@@ -40,9 +40,9 @@ Sync every hour with cron schedule (container keeps running):
         -e BUCKET=mybucket \
         -e CRON_SCHEDULE="0 * * * *" \
 		-e BUCKET_PATH=/path \
-	-e MAX_CONCURRENT_REQUESTS=4 \
-	-e MULTIPART_THRESHOLD=1MB \
-	-e MULTIPART_CHUNKSIZE=1MB \
+        -e MAX_CONCURRENT_REQUESTS=4 \
+        -e MULTIPART_THRESHOLD=1MB \
+        -e MULTIPART_CHUNKSIZE=1MB \
         -v /home/user/data:/data:ro \
         futurevision/aws-s3-sync
 
@@ -53,9 +53,9 @@ Sync just once (container is deleted afterwards):
         -e SECRET=mysecret \
 		-e REGION=region \
         -e BUCKET=mybucket \
-	-e MAX_CONCURRENT_REQUESTS=4 \
-	-e MULTIPART_THRESHOLD=1MB \
-	-e MULTIPART_CHUNKSIZE=1MB \
+        -e MAX_CONCURRENT_REQUESTS=4 \
+        -e MULTIPART_THRESHOLD=1MB \
+        -e MULTIPART_CHUNKSIZE=1MB \
         -v /home/user/data:/data:ro \
         futurevision/aws-s3-sync no-cron
 
