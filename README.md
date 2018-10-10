@@ -8,7 +8,7 @@ Docker container that periodically syncs a folder to Amazon S3 using the [AWS Co
 
 ## Usage
 
-    docker run -d [OPTIONS] futurevision/aws-s3-sync
+    docker run -d [OPTIONS] channelape/aws-s3-sync
 
 
 ### Required Parameters:
@@ -17,6 +17,9 @@ Docker container that periodically syncs a folder to Amazon S3 using the [AWS Co
 * `-e SECRET=<SECRET>`: User Access Secret
 * `-e REGION=<REGION>`: Region of your bucket
 * `-e BUCKET=<BUCKET>`: The name of your bucket
+* `-e MAX_CONCURRENT_REQUESTS=<MAX_CONCURRENT_REQUESTS>`: The maximum number of concurrent requests.
+* `-e MULTIPART_THRESHOLD=<THRESHOLD>`: The size threshold the CLI uses for multipart transfers of individual files.
+* `-e MULTIPART_CHUNKSIZE=<CHUNKSIZE>`: When using multipart transfers, this is the chunk size that the CLI uses for multipart transfers of individual files.
 * `-v /path/to/backup:/data:ro`: mount target local folder to container's data folder. Content of this folder will be synced with S3 bucket.
 
 ### Optional parameters:
@@ -37,6 +40,9 @@ Sync every hour with cron schedule (container keeps running):
         -e BUCKET=mybucket \
         -e CRON_SCHEDULE="0 * * * *" \
 		-e BUCKET_PATH=/path \
+	-e MAX_CONCURRENT_REQUESTS=4 \
+	-e MULTIPART_THRESHOLD=1MB \
+	-e MULTIPART_CHUNKSIZE=1MB \
         -v /home/user/data:/data:ro \
         futurevision/aws-s3-sync
 
@@ -47,11 +53,14 @@ Sync just once (container is deleted afterwards):
         -e SECRET=mysecret \
 		-e REGION=region \
         -e BUCKET=mybucket \
+	-e MAX_CONCURRENT_REQUESTS=4 \
+	-e MULTIPART_THRESHOLD=1MB \
+	-e MULTIPART_CHUNKSIZE=1MB \
         -v /home/user/data:/data:ro \
         futurevision/aws-s3-sync no-cron
 
 ## Credits
 
-This container is heavily inspired by [istepanov/backup-to-s3](https://github.com/istepanov/docker-backup-to-s3/blob/master/README.md).
+This container is heavily inspired by [futurevision/aws-s3-sync](https://github.com/futurevision/docker-aws-s3-sync) & [istepanov/backup-to-s3](https://github.com/istepanov/docker-backup-to-s3/blob/master/README.md).
 
 The main difference is that this container is using Alpine Linux instead of Debian to be more light weight. It also uses a different method of using the AWS CLI tool.
